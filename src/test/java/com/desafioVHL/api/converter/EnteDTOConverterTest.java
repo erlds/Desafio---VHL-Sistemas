@@ -2,6 +2,7 @@ package com.desafioVHL.api.converter;
 
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
 import com.desafioVHL.api.DTO.EnteDTO;
+import com.desafioVHL.api.entities.Ente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,19 +32,19 @@ public class EnteDTOConverterTest {
 
     @Test
     public void testConvertFromEnteDeclaradoUtilidadePublicaEstadualToEnteDTO(){
-        EnteDTO enteDTO = enteConverter.converter(enteDeclarado);
-        assertTrue(enteDTO.getCodigo().equals(enteDeclarado.getCdentepub()));
-        assertTrue(enteDTO.getLei().equals(enteDeclarado.getLei()));
-        assertTrue(enteDTO.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
+        Ente ente = enteConverter.converter(enteDeclarado);
+        assertTrue(ente.getCodigo().equals(enteDeclarado.getCdentepub()));
+        assertTrue(ente.getLei().equals(enteDeclarado.getLei()));
+        assertTrue(ente.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
     }
 
     @Test
     public void testConvertFromListEnteDeclaradoUtilidadePublicaEstadualToListEnteDTO(){
-        List<EnteDTO> enteDTOS = enteConverter.converter(createListEnteDeclarado());
-        enteDTOS.forEach(enteDTO -> {
-            assertTrue(enteDTO.getCodigo().equals(enteDeclarado.getCdentepub()));
-            assertTrue(enteDTO.getLei().equals(enteDeclarado.getLei()));
-            assertTrue(enteDTO.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
+        List<Ente> entes = enteConverter.converter(createListEnteDeclarado());
+        entes.forEach(ente -> {
+            assertTrue(ente.getCodigo().equals(enteDeclarado.getCdentepub()));
+            assertTrue(ente.getLei().equals(enteDeclarado.getLei()));
+            assertTrue(ente.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
         });
     }
 
