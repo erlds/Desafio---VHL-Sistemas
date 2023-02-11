@@ -7,6 +7,8 @@ import javax.xml.ws.Service;
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
 import br.jus.tjsc.selo.Exception_Exception;
 import br.jus.tjsc.selo.SeloService;
+import com.desafioVHL.api.DTO.Ente;
+import com.desafioVHL.api.converter.EnteConverter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,12 +19,17 @@ class EnteService {
   private static final String SITE_SELO = "http://www.tjsc.jus.br/selo";
   private static final String SELO_SERVICE_LOCALPART = "SeloService";
 
+  private EnteConverter enteConverter;
+
+  public List<Ente> findAll(){
+    return enteConverter.converter(getEntesDeclaradosUtilidadePublicaEstadual());
+  }
+
   private List<EnteDeclaradoUtilidadePublicaEstadual> getEntesDeclaradosUtilidadePublicaEstadual(){
     SeloService seloService = createSeloService();
     try {
       return seloService.getEntesDeclaradosUtilidadePublicaEstadual();
     } catch (Exception_Exception e) {
-      e.printStackTrace();
       return null;
     }
   }
