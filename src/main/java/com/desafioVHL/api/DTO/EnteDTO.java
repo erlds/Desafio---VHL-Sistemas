@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class Ente {
+public class EnteDTO {
 
     @NotBlank
     private Long codigo;

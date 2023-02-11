@@ -1,13 +1,12 @@
 package com.desafioVHL.api.services;
 
-import javax.net.ssl.SSLHandshakeException;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
 import br.jus.tjsc.selo.Exception_Exception;
 import br.jus.tjsc.selo.SeloService;
-import com.desafioVHL.api.DTO.Ente;
+import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.converter.EnteConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,7 +24,7 @@ public class EnteService {
   @Autowired
   private EnteConverter enteConverter;
 
-  public List<Ente> findAll(){
+  public List<EnteDTO> findAll(){
     return enteConverter.converter(getEntesDeclaradosUtilidadePublicaEstadual());
   }
 

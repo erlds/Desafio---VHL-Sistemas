@@ -1,7 +1,7 @@
 package com.desafioVHL.api.converter;
 
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
-import com.desafioVHL.api.DTO.Ente;
+import com.desafioVHL.api.DTO.EnteDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EnteConverterTest {
+public class EnteDTOConverterTest {
 
     private EnteDeclaradoUtilidadePublicaEstadual enteDeclarado;
 
@@ -31,19 +31,19 @@ public class EnteConverterTest {
 
     @Test
     public void testConvertFromEnteDeclaradoUtilidadePublicaEstadualToEnteDTO(){
-        Ente ente = enteConverter.converter(enteDeclarado);
-        assertTrue(ente.getCodigo().equals(enteDeclarado.getCdentepub()));
-        assertTrue(ente.getLei().equals(enteDeclarado.getLei()));
-        assertTrue(ente.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
+        EnteDTO enteDTO = enteConverter.converter(enteDeclarado);
+        assertTrue(enteDTO.getCodigo().equals(enteDeclarado.getCdentepub()));
+        assertTrue(enteDTO.getLei().equals(enteDeclarado.getLei()));
+        assertTrue(enteDTO.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
     }
 
     @Test
     public void testConvertFromListEnteDeclaradoUtilidadePublicaEstadualToListEnteDTO(){
-        List<Ente> entes = enteConverter.converter(createListEnteDeclarado());
-        entes.forEach(ente -> {
-            assertTrue(ente.getCodigo().equals(enteDeclarado.getCdentepub()));
-            assertTrue(ente.getLei().equals(enteDeclarado.getLei()));
-            assertTrue(ente.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
+        List<EnteDTO> enteDTOS = enteConverter.converter(createListEnteDeclarado());
+        enteDTOS.forEach(enteDTO -> {
+            assertTrue(enteDTO.getCodigo().equals(enteDeclarado.getCdentepub()));
+            assertTrue(enteDTO.getLei().equals(enteDeclarado.getLei()));
+            assertTrue(enteDTO.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
         });
     }
 

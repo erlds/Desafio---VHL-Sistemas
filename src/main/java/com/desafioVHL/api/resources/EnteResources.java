@@ -1,6 +1,6 @@
 package com.desafioVHL.api.resources;
 
-import com.desafioVHL.api.DTO.Ente;
+import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.services.EnteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class EnteResources {
 
     @GetMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<List<Ente>> getClienteById() {
+    public ResponseEntity<List<EnteDTO>> getClienteById() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 }
