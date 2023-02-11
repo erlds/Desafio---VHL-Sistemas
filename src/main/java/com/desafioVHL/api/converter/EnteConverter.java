@@ -2,10 +2,12 @@ package com.desafioVHL.api.converter;
 
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
 import com.desafioVHL.api.DTO.Ente;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class EnteConverter {
 
     public List<Ente> converter(List<EnteDeclaradoUtilidadePublicaEstadual> entes) {

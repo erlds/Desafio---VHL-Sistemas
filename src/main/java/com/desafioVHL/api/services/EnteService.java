@@ -9,16 +9,20 @@ import br.jus.tjsc.selo.Exception_Exception;
 import br.jus.tjsc.selo.SeloService;
 import com.desafioVHL.api.DTO.Ente;
 import com.desafioVHL.api.converter.EnteConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
-class EnteService {
+@org.springframework.stereotype.Service
+public class EnteService {
   private static final String WSDL_SELO_SERVICE = "http://selo.tjsc.jus.br/SeloService31Teste?wsdl";
   private static final String SITE_SELO = "http://www.tjsc.jus.br/selo";
   private static final String SELO_SERVICE_LOCALPART = "SeloService";
 
+  @Autowired
   private EnteConverter enteConverter;
 
   public List<Ente> findAll(){
@@ -30,7 +34,7 @@ class EnteService {
     try {
       return seloService.getEntesDeclaradosUtilidadePublicaEstadual();
     } catch (Exception_Exception e) {
-      return null;
+      return new ArrayList<EnteDeclaradoUtilidadePublicaEstadual>();
     }
   }
 
@@ -45,6 +49,7 @@ class EnteService {
     } catch (MalformedURLException e) {
       return null;
     }
+
   }
 
   private QName createQnameFromSiteSelo(){
