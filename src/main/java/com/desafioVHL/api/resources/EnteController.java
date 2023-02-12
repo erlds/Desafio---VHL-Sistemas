@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*",maxAge = 3600)
 @RequestMapping("/entes")
-public class EnteResources {
+public class EnteController {
 
     @Autowired
     private EnteService service;
