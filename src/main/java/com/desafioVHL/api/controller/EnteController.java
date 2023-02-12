@@ -1,7 +1,8 @@
-package com.desafioVHL.api.resources;
+package com.desafioVHL.api.controller;
 
 import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.services.EnteService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
