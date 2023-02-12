@@ -3,6 +3,7 @@ package com.desafioVHL.api.resources;
 import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.services.EnteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class EnteResources {
 
     @GetMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<List<EnteDTO>> getClienteById() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
+    public ResponseEntity<List<EnteDTO>> getClienteById(Integer id, String nomeDaEntidade ,Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAll(id,nomeDaEntidade,pageable));
     }
 }
