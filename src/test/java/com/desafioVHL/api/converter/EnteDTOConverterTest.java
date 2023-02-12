@@ -1,7 +1,6 @@
 package com.desafioVHL.api.converter;
 
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
-import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.entities.Ente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,19 +8,19 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EnteDTOConverterTest {
 
     private EnteDeclaradoUtilidadePublicaEstadual enteDeclarado;
 
-    private EnteConverter enteConverter = new EnteConverter();
+    private final EnteConverter enteConverter = new EnteConverter();
 
     @BeforeEach
     public void createEnteDeclarado() {
         enteDeclarado = new EnteDeclaradoUtilidadePublicaEstadual();
         enteDeclarado.setCdcomarca(0);
-        enteDeclarado.setCdentepub(12l);
+        enteDeclarado.setCdentepub(12L);
         enteDeclarado.setDtLei("DtLei");
         enteDeclarado.setDtLeiExtenso("DtLeiExtenso");
         enteDeclarado.setLei("Lei");
@@ -32,24 +31,24 @@ public class EnteDTOConverterTest {
 
     @Test
     public void testConvertFromEnteDeclaradoUtilidadePublicaEstadualToEnteDTO(){
-        Ente ente = enteConverter.converter(enteDeclarado);
-        assertTrue(ente.getCodigo().equals(enteDeclarado.getCdentepub()));
-        assertTrue(ente.getLei().equals(enteDeclarado.getLei()));
-        assertTrue(ente.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
+        Ente ente = enteConverter.convertFromEnteDeclaradoToEnte(enteDeclarado);
+        assertEquals(ente.getCodigo(),enteDeclarado.getCdentepub());
+        assertEquals(ente.getLei(),enteDeclarado.getLei());
+        assertEquals(ente.getNomeDaEntidade(),enteDeclarado.getNomeEntidade());
     }
 
     @Test
     public void testConvertFromListEnteDeclaradoUtilidadePublicaEstadualToListEnteDTO(){
-        List<Ente> entes = enteConverter.converter(createListEnteDeclarado());
+        List<Ente> entes = enteConverter.convertFromListEnteDeclaradoToListEnte(createListEnteDeclarado());
         entes.forEach(ente -> {
-            assertTrue(ente.getCodigo().equals(enteDeclarado.getCdentepub()));
-            assertTrue(ente.getLei().equals(enteDeclarado.getLei()));
-            assertTrue(ente.getNomeDaEntidade().equals(enteDeclarado.getNomeEntidade()));
+            assertEquals(ente.getCodigo(),enteDeclarado.getCdentepub());
+            assertEquals(ente.getLei(),enteDeclarado.getLei());
+            assertEquals(ente.getNomeDaEntidade(),enteDeclarado.getNomeEntidade());
         });
     }
 
     private List<EnteDeclaradoUtilidadePublicaEstadual> createListEnteDeclarado() {
-        List<EnteDeclaradoUtilidadePublicaEstadual> listEntesDeclarados = new ArrayList<EnteDeclaradoUtilidadePublicaEstadual>();
+        List<EnteDeclaradoUtilidadePublicaEstadual> listEntesDeclarados = new ArrayList<>();
         listEntesDeclarados.add(enteDeclarado);
         listEntesDeclarados.add(enteDeclarado);
         listEntesDeclarados.add(enteDeclarado);

@@ -1,5 +1,6 @@
 package com.desafioVHL.api.services;
 
+import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
 import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.converter.EnteConverter;
 import com.desafioVHL.api.entities.Ente;
@@ -8,6 +9,8 @@ import com.desafioVHL.api.utils.EntesDeclarados;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -23,23 +26,20 @@ public class EnteService {
 
     @PostConstruct
     public void fillDataEntesDeclaradosUtilidadePublicaEstadualToDataBase() {
-        enteRepository.saveAll(enteConverter.converter(EntesDeclarados.getEntesDeclaradosUtilidadePublicaEstadual()));
+        List<EnteDeclaradoUtilidadePublicaEstadual> entesDeclarados = EntesDeclarados.getEntesDeclaradosUtilidadePublicaEstadual();
+        List<Ente> entes = enteConverter.convertFromListEnteDeclaradoToListEnte(entesDeclarados);
+        enteRepository.saveAll(entes);
     }
 
-    public List<EnteDTO> findAll(Integer id, String nomeDaEntidade, Pageable pageable) {
-        Page<Ente> entesPage = getDataFromEnteRepository(id,nomeDaEntidade,pageable);
-        List<EnteDTO> entesDTO = enteConverter.convertPageEnteToListEntesDTO(entesPage);
-        return entesDTO;
+    public EnteDTO findById(Integer id) {
+        Ente ente = enteRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        return enteConverter.convertEnteToEnteDTO(ente);
     }
 
-    private Page<Ente> getDataFromEnteRepository(Integer id, String nomeDaEntidade, Pageable pageable){
-        if (id != null) {
-            return enteRepository.findAllById(id,pageable);
-        }
-        if (nomeDaEntidade != null){
-            return enteRepository.findAllByNomeDaEntidade(nomeDaEntidade,pageable);
-        }
-        return enteRepository.findAll(pageable);
+    public List<EnteDTO> findAllByNomeDaEntidade(String nomeDaEntidade, Pageable pageable){
+        Page<Ente> pageEntes =  enteRepository.findAllByNomeDaEntidade(nomeDaEntidade,pageable);
+        return enteConverter.convertPageEnteToListEntesDTO(pageEntes);
     }
 
 
