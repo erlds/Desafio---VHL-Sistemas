@@ -1,7 +1,6 @@
 package com.desafioVHL.api.utils;
 
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
-import com.desafioVHL.api.entities.Ente;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

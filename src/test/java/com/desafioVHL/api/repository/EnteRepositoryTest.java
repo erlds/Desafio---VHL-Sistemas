@@ -1,9 +1,7 @@
 package com.desafioVHL.api.repository;
 
-import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.entities.Ente;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

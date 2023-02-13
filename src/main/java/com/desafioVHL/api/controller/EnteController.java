@@ -3,7 +3,6 @@ package com.desafioVHL.api.controller;
 import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.services.EnteService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
