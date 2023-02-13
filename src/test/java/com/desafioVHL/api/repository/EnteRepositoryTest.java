@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -42,7 +43,7 @@ public class EnteRepositoryTest {
     }
 
     @Test
-    public void findAllByNomeDaEntidade(){
+    public void findAllByNomeDaEntidadeTest(){
         Page<Ente> foundBook = repository.findAllByNomeDaEntidade(ente.getNomeDaEntidade(), PageRequest.of(0, 10));
         assertThat(foundBook.getContent()).hasSize(1);
     }
@@ -54,5 +55,19 @@ public class EnteRepositoryTest {
         ente.setNomeDaEntidade("ASSOCIAÇÃO ATLÉTICA BEIRA RIO");
         return ente;
     }
+
+    @Test
+    public void findByIdTestFail() {
+        int wrongId = 2;
+        Optional<Ente> foundBook = repository.findById(wrongId);
+        assertTrue(foundBook.isEmpty());
+    }
+
+    @Test
+    public void findAllByNomeDaEntidadeTestFail(){
+        Page<Ente> foundBook = repository.findAllByNomeDaEntidade("otherNomeDaEntidade", PageRequest.of(0, 10));
+        assertThat(foundBook.getContent()).hasSize(0);
+    }
+
 
 }

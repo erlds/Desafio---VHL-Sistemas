@@ -16,7 +16,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.server.ResponseStatusException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +74,17 @@ public class EnteServiceTest {
         Assertions.assertThat(result.get(0)).isEqualTo(converter.convertEnteToEnteDTO(entes.get(0)));
     }
 
-    public static Ente createNewEnte() {
+    @Test
+    public void findByIdTestFailBecauseOfNonExistentId(){
+        assertThrows(ResponseStatusException.class,() -> service.findById(8000));
+    }
+
+    @Test
+    public void findByIdTestFailBecauseOfNonExistentNomeDaEntidade(){
+        assertThrows(ResponseStatusException.class,() -> service.findAllByNomeDaEntidade("whatevername", PageRequest.of(0, 10)));
+    }
+
+    private static Ente createNewEnte() {
         Ente ente = new Ente();
         ente.setCodigo(1565L);
         ente.setLei("5.133");

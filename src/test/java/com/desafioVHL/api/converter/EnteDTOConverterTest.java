@@ -30,7 +30,7 @@ public class EnteDTOConverterTest {
     }
 
     @Test
-    public void testConvertFromEnteDeclaradoUtilidadePublicaEstadualToEnteDTO(){
+    public void convertFromEnteDeclaradoUtilidadePublicaEstadualToEnteDTOTest(){
         Ente ente = enteConverter.convertFromEnteDeclaradoToEnte(enteDeclarado);
         assertEquals(ente.getCodigo(),enteDeclarado.getCdentepub());
         assertEquals(ente.getLei(),enteDeclarado.getLei());
@@ -38,7 +38,7 @@ public class EnteDTOConverterTest {
     }
 
     @Test
-    public void testConvertFromListEnteDeclaradoUtilidadePublicaEstadualToListEnteDTO(){
+    public void convertFromListEnteDeclaradoUtilidadePublicaEstadualToListEnteDTOTest(){
         List<Ente> entes = enteConverter.convertFromListEnteDeclaradoToListEnte(createListEnteDeclarado());
         entes.forEach(ente -> {
             assertEquals(ente.getCodigo(),enteDeclarado.getCdentepub());

@@ -35,7 +35,7 @@ public class EnteService {
     }
 
     @PostConstruct
-    public void fillDataEntesDeclaradosUtilidadePublicaEstadualToDataBase() {
+    private void fillDataEntesDeclaradosUtilidadePublicaEstadualToDataBase() {
         List<EnteDeclaradoUtilidadePublicaEstadual> entesDeclarados = EntesDeclarados.getEntesDeclaradosUtilidadePublicaEstadual();
         List<Ente> entes = enteConverter.convertFromListEnteDeclaradoToListEnte(entesDeclarados);
         enteRepository.saveAll(entes);
@@ -50,13 +50,11 @@ public class EnteService {
 
     public List<EnteDTO> findAllByNomeDaEntidade(String nomeDaEntidade, Pageable pageable){
         Page<Ente> pageEntes =  enteRepository.findAllByNomeDaEntidade(nomeDaEntidade,pageable);
-        if (pageEntes.isEmpty()) {
+        if (pageEntes == null || pageEntes.isEmpty()) {
             log.error(NOMEDAENTIDADE_NOT_FOUND);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, NOMEDAENTIDADE_NOT_FOUND);
         }
         log.info("{} entes foram recuperados com sucesso !" , pageEntes.getTotalElements());
         return enteConverter.convertPageEnteToListEntesDTO(pageEntes);
     }
-
-
 }

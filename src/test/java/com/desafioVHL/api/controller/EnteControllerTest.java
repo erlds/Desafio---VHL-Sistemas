@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,6 +36,8 @@ public class EnteControllerTest {
 
     private static final String URI_ID = "/entes";
     private static final int ID = 13;
+    private static final String CORRECT_USERNAME = "cartorio";
+    private static final String CORRECT_PASSWORD = "selodigital";
 
     @Autowired
     private MockMvc mvc;
@@ -45,22 +48,21 @@ public class EnteControllerTest {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    public void findByIdTeste() throws Exception{
+    public void findByIdTest() throws Exception{
         EnteDTO expectedEnteDTO = createNewEnteDTO();
         BDDMockito.given(enteService.findById(ID)).willReturn(expectedEnteDTO);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get(URI_ID + "/" + ID)
-                .with(httpBasic("cartorio", "selodigital"));
+                .with(httpBasic(CORRECT_USERNAME, CORRECT_PASSWORD));
 
         MvcResult result = mvc.perform(request).andExpect(status().isOk()).andReturn();
         EnteDTO actualEnteDTO = objectMapper.readValue(result.getResponse().getContentAsString(), EnteDTO.class);
-        actualEnteDTO.setNomeDaEntidade(formatNomeDaEntidade(actualEnteDTO.getNomeDaEntidade()));
         Assertions.assertEquals(expectedEnteDTO, actualEnteDTO);
     }
 
     @Test
-    public void findAllByNomeDaEntidade() throws Exception{
+    public void findAllByNomeDaEntidadeTest() throws Exception{
 
         EnteDTO expectedEnteDTO = createNewEnteDTO();
         List<EnteDTO> expectedDTOList = new LinkedList<>();
@@ -74,19 +76,53 @@ public class EnteControllerTest {
                 .param("page","0")
                 .param("size", "1")
                 .param("nomeDaEntidade", "GRUPO CONDOR")
-                .with(httpBasic("cartorio", "selodigital"));
+                .with(httpBasic(CORRECT_USERNAME, CORRECT_PASSWORD));
 
         MvcResult result = mvc.perform( request ).andExpect( status().isOk() ).andReturn();
         List<EnteDTO> actualListEnteDTO = objectMapper.readValue(result.getResponse().getContentAsString(),new TypeReference<List<EnteDTO>>(){});
         Assertions.assertEquals(expectedDTOList, actualListEnteDTO);
     }
 
-    private String formatNomeDaEntidade(String str){
-        try {
-            return new String(str.getBytes("ISO-8859-1"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            return str;
-        }
+    @Test
+    public void makeRequestWithWrongCredentialsTest () throws Exception{
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(URI_ID + "/" + ID)
+                .with(httpBasic("wrongusername", "wrongpassword"));
+        mvc.perform(request).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void findByIdTesteIfIdNotExistTest() throws Exception{
+        int wrongid = 8000;
+        EnteDTO expectedEnteDTO = createNewEnteDTO();
+        BDDMockito.given(enteService.findById(wrongid)).willReturn(expectedEnteDTO);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(URI_ID + "/" + ID)
+                .with(httpBasic(CORRECT_USERNAME, CORRECT_PASSWORD));
+
+        MvcResult result = mvc.perform(request).andExpect(status().isOk()).andReturn();
+        assertEquals(result.getResponse().getContentAsString(), "");
+    }
+
+    @Test
+    public void findAllByNomeDaEntidadeIfNomeDaEntidadeNotExistTest() throws Exception{
+        EnteDTO expectedEnteDTO = createNewEnteDTO();
+        List<EnteDTO> expectedDTOList = new LinkedList<>();
+        PageRequest pageRequest = PageRequest.of(0, 1);
+        expectedDTOList.add(expectedEnteDTO);
+
+        BDDMockito.given(enteService.findAllByNomeDaEntidade("wrongNomeDaEntidade", pageRequest) ).willReturn(expectedDTOList);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(URI_ID)
+                .param("page","0")
+                .param("size", "1")
+                .param("nomeDaEntidade", "GRUPO CONDOR")
+                .with(httpBasic(CORRECT_USERNAME, CORRECT_PASSWORD));
+
+        MvcResult result = mvc.perform(request).andExpect(status().isOk()).andReturn();
+        assertEquals(result.getResponse().getContentAsString(), "[]");
     }
 
     private EnteDTO createNewEnteDTO() {
