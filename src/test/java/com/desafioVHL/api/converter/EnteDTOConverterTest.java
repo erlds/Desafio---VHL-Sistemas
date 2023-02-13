@@ -1,6 +1,7 @@
 package com.desafioVHL.api.converter;
 
 import br.jus.tjsc.selo.EnteDeclaradoUtilidadePublicaEstadual;
+import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.entities.Ente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,11 +48,24 @@ public class EnteDTOConverterTest {
         });
     }
 
+    @Test
+    public void convertEnteToEnteDTOTest(){
+        Ente ente = createNewEnte();
+        EnteDTO enteDTO = enteConverter.convertEnteToEnteDTO(ente);
+        assertEquals(ente.getCodigo(),enteDTO.getCodigo());
+        assertEquals(ente.getLei(),enteDTO.getLei());
+        assertEquals(ente.getNomeDaEntidade(),enteDTO.getNomeDaEntidade());
+    }
+
     private List<EnteDeclaradoUtilidadePublicaEstadual> createListEnteDeclarado() {
         List<EnteDeclaradoUtilidadePublicaEstadual> listEntesDeclarados = new ArrayList<>();
         listEntesDeclarados.add(enteDeclarado);
         listEntesDeclarados.add(enteDeclarado);
         listEntesDeclarados.add(enteDeclarado);
         return listEntesDeclarados;
+    }
+
+    private Ente createNewEnte(){
+        return new Ente(7000,100L,"123","Nome Da Entidade teste");
     }
 }
