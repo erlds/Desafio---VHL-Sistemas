@@ -1,8 +1,9 @@
-# Desafio de Conhecimento Técnico Pessoa Desenvolvedora Java Pleno
+# Desafio VHL Sistemas - Pessoa Desenvolvedora Java Pleno
 
 O projeto implementado aqui visa a obtenção e apresentação dos dados de retorno do método getEntesDeclaradosUtilidadePublicaEstadual presente na classe SeloService do sistema do TJSC.
 
 Todo o projeto foi implemetado no pacote com.desafioVHL.api, o conjunto de pastas/pacotes br.jus.tjsc.selo serve apenas para o projeto principal poder fazer uso dessas classes nas aplicações (SeloService e EnteDeclaradoUtilidadePublicaEstadual).
+Existem teste unitários no diretorio src/test para todas as camadas da aplicação, que podem ser facilmente verificadas em uma IDE como o IntellJ
 
 O projeto foi inteiramente criado no Java 11, utilizando a IDE IntelliJ, e uma outra parte foi feita no VSCode, utilizando gerenciador de projetos Maven e framework Spring, o sistema operacional usado foi o Linux Debian 11.
 
