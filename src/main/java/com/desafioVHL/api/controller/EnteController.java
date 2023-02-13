@@ -2,6 +2,7 @@ package com.desafioVHL.api.controller;
 
 import com.desafioVHL.api.DTO.EnteDTO;
 import com.desafioVHL.api.services.EnteService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,9 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*",maxAge = 3600)
 @RequestMapping("/entes")
+@AllArgsConstructor
 public class EnteController {
 
-    @Autowired
     private EnteService service;
 
     @GetMapping("{id}")

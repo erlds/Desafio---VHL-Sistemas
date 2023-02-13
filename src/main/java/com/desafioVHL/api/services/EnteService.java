@@ -21,8 +21,12 @@ public class EnteService {
     @Autowired
     private EnteConverter enteConverter;
 
-    @Autowired
     private EnteRepository enteRepository;
+
+    public EnteService(EnteRepository enteRepository){
+        this.enteRepository = enteRepository;
+        this.enteConverter = new EnteConverter();
+    }
 
     @PostConstruct
     public void fillDataEntesDeclaradosUtilidadePublicaEstadualToDataBase() {
