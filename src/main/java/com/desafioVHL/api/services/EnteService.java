@@ -36,9 +36,13 @@ public class EnteService {
 
     @PostConstruct
     private void fillDataEntesDeclaradosUtilidadePublicaEstadualToDataBase() {
-        List<EnteDeclaradoUtilidadePublicaEstadual> entesDeclarados = EntesDeclarados.getEntesDeclaradosUtilidadePublicaEstadual();
-        List<Ente> entes = enteConverter.convertFromListEnteDeclaradoToListEnte(entesDeclarados);
-        enteRepository.saveAll(entes);
+        boolean tableEmpty = enteRepository.findAll().isEmpty();
+        if (tableEmpty) {
+            List<EnteDeclaradoUtilidadePublicaEstadual> entesDeclarados = EntesDeclarados.getEntesDeclaradosUtilidadePublicaEstadual();
+            List<Ente> entes = enteConverter.convertFromListEnteDeclaradoToListEnte(entesDeclarados);
+            enteRepository.saveAll(entes);
+            log.info("Dados carregados com sucesso do servidor de homologação do TJSC");
+        }
     }
 
     public EnteDTO findById(Integer id) {
